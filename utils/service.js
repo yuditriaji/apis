@@ -1,6 +1,11 @@
 const admin = require('firebase-admin');
-const serviceAdmin = require('./config');
+const serviceAccount = require('./serAcc.json');
 
-const serAcc = admin.initializeApp(serviceAdmin.serviceConfig);
+if (!admin.apps.length) {
+    admin.initializeApp({
+        credential: admin.credential.cert(serviceAccount),
+        databaseURL: "https://vous-31919.firebaseio.com"
+    });
+}
 
-module.exports = serAcc;
+module.exports = admin;

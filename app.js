@@ -9,6 +9,11 @@ const firebase = require('firebase');
 var userRoutes = require('./routes/user-routes');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var cartRouter = require('./routes/cart-route');
+var paymentRoutes = require('./routes/payment-route');
+var webhookRoutes = require('./routes/webhook-route');
+
+var validationMiddleware = require('./middleware/validationMiddleware');
 
 var app = express();
 
@@ -26,22 +31,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api', userRoutes.router);
+app.use('/cart', cartRouter.router);
+app.use('/payment', paymentRoutes.router);
+app.use('/webhook', webhookRoutes.router);
 
-// app.post('/user/register', (req, res) => {
-//   console.log(req.body);
-//   console.log(typeof req.body);
-//   admin.auth().createUser({
-//     email: req.body.email,
-//     displayName: req.body.displayName
-//   }).then(function(user){
-//     console.log('Success creating user: ', user.uid);
-//   }).catch(function(error){
-//     console.log('Error creating user: ',error)
-//   });
-//   res.send(
-//     `I received your POST request. This is what you sent me: ${req.body.email}`,
-//   );
-// });
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

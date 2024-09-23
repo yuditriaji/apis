@@ -1,6 +1,15 @@
 const admin = require('firebase-admin');
 var serviceAccount = require("./serAcc.json");
 
+if (!admin.apps.length) {
+  admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+      databaseURL: "https://vous-31919.firebaseio.com"
+  });
+}
+
+const firestore = admin.firestore();
+
 const firebaseConfig  = {
     apiKey: "AIzaSyA5JEM2O2zwONPE1hnhL-xb7pNeFGtmRH0",
     authDomain: "vous-31919.firebaseapp.com",
@@ -18,6 +27,5 @@ const serviceConfig = {
 };
 
 
-module.exports = {firebaseConfig, serviceConfig};
-// export default firebaseConfig;
+module.exports = { firebaseConfig, firestore };
 
