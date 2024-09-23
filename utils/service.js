@@ -1,10 +1,12 @@
 const admin = require('firebase-admin');
-const serviceAccount = require('./serAcc.json');
+require('dotenv').config();
+
+const serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
 
 if (!admin.apps.length) {
     admin.initializeApp({
         credential: admin.credential.cert(serviceAccount),
-        databaseURL: "https://vous-31919.firebaseio.com"
+        databaseURL: process.env.FIREBASE_DATABASE_URL
     });
 }
 

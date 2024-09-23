@@ -1,29 +1,31 @@
 const admin = require('firebase-admin');
-var serviceAccount = require("./serAcc.json");
+require('dotenv').config();
+
+const serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
 
 if (!admin.apps.length) {
   admin.initializeApp({
       credential: admin.credential.cert(serviceAccount),
-      databaseURL: "https://vous-31919.firebaseio.com"
+      databaseURL: process.env.FIREBASE_DATABASE_URL
   });
 }
 
 const firestore = admin.firestore();
 
 const firebaseConfig  = {
-    apiKey: "AIzaSyA5JEM2O2zwONPE1hnhL-xb7pNeFGtmRH0",
-    authDomain: "vous-31919.firebaseapp.com",
-    databaseURL: "https://vous-31919.firebaseio.com",
-    projectId: "vous-31919",
-    storageBucket: "vous-31919.appspot.com",
-    messagingSenderId: "323318575674",
-    appId: "1:323318575674:web:688597f797e55dac4bbb03",
-    measurementId: "G-S0NRNXFT3H"
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.FIREBASE_DATABASE_URL,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID,
+    measurementId: process.env.FIREBASE_MEASUREMENT_ID
 };
 
 const serviceConfig = {
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://vous-31919.firebaseio.com"
+  databaseURL: process.env.FIREBASE_DATABASE_URL
 };
 
 
