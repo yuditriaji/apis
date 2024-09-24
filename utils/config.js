@@ -2,6 +2,13 @@ const admin = require('firebase-admin');
 require('dotenv').config();
 
 const serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
+// const serviceAccount = require('../serAcc.json');
+
+
+// Check if serviceAccount is valid
+if (!serviceAccount || !serviceAccount.private_key) {
+    throw new Error('Invalid service account credentials');
+}
 
 if (!admin.apps.length) {
   admin.initializeApp({
