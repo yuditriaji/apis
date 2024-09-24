@@ -1,18 +1,22 @@
 const admin = require('firebase-admin');
 require('dotenv').config();
 
-const serviceAccount = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON);
-// const serviceAccount = require('../serAcc.json');
-
+const serviceAccountJson = process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON;
+const privateKey = process.env.GOOGLE_APPLICATION_PRIVATE_KEY; // Define private key separately
+const serviceAccount = serviceAccountJson ? JSON.parse(serviceAccountJson) : {}; // Parse only if JSON is available
 
 // Check if serviceAccount is valid
-if (!serviceAccount || !serviceAccount.private_key) {
+if (!serviceAccount || !privateKey) { // Use privateKey for validation
     throw new Error('Invalid service account credentials');
 }
 
 if (!admin.apps.length) {
   admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount),
+      credential: admin.credential.cert({
+          projectId: serviceAccount.project_id,
+          clientEmail: serviceAccount.client_email,
+          privateKey: privateKey, // Use the separate privateKey
+      }),
       databaseURL: process.env.FIREBASE_DATABASE_URL
   });
 }
